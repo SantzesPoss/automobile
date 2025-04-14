@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Liarostathis Automobile Αρχική Σελίδα</title>
+    <meta name="description" content="Εισαγωγή Οχημάτων από τη Γερμανία
+    Εντοπίζουμε και αξιολογούμε με απόλυτη ακρίβεια το όχημα που σας ενδιαφέρει. Χάρη στον σύγχρονο εξοπλισμό ελέγχου και τη μακροχρόνια εμπειρία μας στον χώρο, πραγματοποιούμε σχολαστικό τεχνικό έλεγχο και σας παρέχουμε αναλυτική αναφορά για την πραγματική του κατάσταση – μηχανική, αισθητική και λειτουργική.">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: #0a0a0a;
+            color: #fff;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 40px;
+            max-width: 1280px;
+            margin: 0 auto;
+            background: linear-gradient(90deg, #141313 0%, #131111 100%);
+            box-shadow: 0 4px 20px rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        #home, #services, #features, #footer {
+            scroll-margin-top: 150px;
+        }
+        .logo img {
+            max-width: 200px;
+            height: auto;
+            filter: brightness(1.3);
+            transition: transform 0.3s ease;
+        }
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 35px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            color: #ff4d4d;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #ff4d4d;
+            transition: width 0.3s ease;
+        }
+        nav ul li a:hover::after, nav ul li a.active::after {
+            width: 100%;
+        }
+        .slider {
+            position: relative;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .slider.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .slider img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            opacity: 0.85;
+            transition: opacity 0.3s ease;
+        }
+        .slider:hover img {
+            opacity: 1;
+        }
+        .slider-text {
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            font-size: 3vw;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            text-align: left;
+            max-width: 45%;
+            z-index: 10;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease 0.2s;
+        }
+        .slider.in-view .slider-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .social-links {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 3vw;
+            padding: 15px 30px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease 0.4s;
+        }
+        .slider.in-view .social-links {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            gap: 1vw;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.4vw;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #ffcc00;
+            transform: translateY(-2px);
+        }
+        .social-links img {
+            width: 2.5vw;
+            min-width: 25px;
+            filter: brightness(1.2);
+        }
+        .slider-description {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 1.1vw;
+            color: #ddd;
+            line-height: 1.9;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .slider-description.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .services, .features {
+            max-width: 1280px;
+            margin: 80px auto;
+            padding: 40px 20px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .services.in-view, .features.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .services h1, .features h1 {
+            color: #ff4d4d;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.8s ease, transform 0.8s ease 0.2s;
+        }
+        .services.in-view h1, .features.in-view h1 {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .services h1::after, .features h1::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: #ffcc00;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        .service-grid, .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 0 20px;
+        }
+        .service-item, .feature-item {
+            padding: 0;
+            background: #1c1c1c;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            overflow: hidden;
+        }
+        .service-item.in-view, .feature-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .service-item:nth-child(1) { transition-delay: 0.1s; }
+        .service-item:nth-child(2) { transition-delay: 0.2s; }
+        .service-item:nth-child(3) { transition-delay: 0.3s; }
+        .service-item:nth-child(4) { transition-delay: 0.4s; }
+        .service-item:nth-child(5) { transition-delay: 0.5s; }
+        .feature-item:nth-child(1) { transition-delay: 0.1s; }
+        .feature-item:nth-child(2) { transition-delay: 0.2s; }
+        .feature-item:nth-child(3) { transition-delay: 0.3s; }
+        .feature-item:nth-child(4) { transition-delay: 0.4s; }
+        .feature-item:nth-child(5) { transition-delay: 0.5s; }
+        .feature-item:nth-child(6) { transition-delay: 0.6s; }
+        .feature-item:nth-child(7) { transition-delay: 0.7s; }
+        .service-item:hover, .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 35px rgba(255,255,255,0.1);
+            background: #252525;
+        }
+        .service-item h2, .feature-item h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding: 0 20px;
+        }
+        .feature-item p {
+            font-size: 1rem;
+            color: #bbb;
+            padding: 0 20px 20px 20px;
+        }
+        .service-item img, .feature-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+            display: block;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+        .service-item:hover img, .feature-item:hover img {
+            transform: scale(1.05);
+        }
+        footer {
+            background: #151515;
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        footer.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: #ff4d4d;
+        }
+        footer .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+        footer img {
+            width: 35px;
+            transition: transform 0.3s ease;
+        }
+        footer a:hover img {
+            transform: scale(1.2);
+        }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 10px 20px;
+            }
+            .logo img {
+                max-width: 150px;
+            }
+            nav {
+                order: -1;
+                margin-right: 10px;
+            }
+            nav ul {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            nav ul li a {
+                font-size: 12px;
+                text-align: left;
+            }
+            nav ul li a::after {
+                bottom: -2px;
+            }
+            .slider-text {
+                font-size: 5vw;
+                top: 10%;
+                max-width: 70%;
+            }
+            .social-links {
+                bottom: 5%;
+                gap: 2vw;
+                padding: 10px 20px;
+            }
+            .social-links a {
+                font-size: 3vw;
+                gap: 1.5vw;
+            }
+            .social-links img {
+                width: 5vw;
+                min-width: 20px;
+            }
+            .slider-description {
+                font-size: 2.5vw;
+                padding: 0 15px;
+            }
+            .services h1, .features h1 {
+                font-size: 2rem;
+            }
+            .service-grid, .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            #home, #services, #features, #footer {
+                scroll-margin-top: 120px;
+            }
+            footer .contact-links {
+                gap: 20px;
+            }
+            footer img {
+                width: 30px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="#home" class="logo-link">
+                <img src="vaggelis.jpg" alt="Liarostathis Automobile Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="active">Αρχική</a></li>
+                <li><a href="#services">Υπηρεσίες</a></li>
+                <li><a href="#features">Γιατί να μας εμπιστευτείτε</a></li>
+                <li><a href="#footer">Επικοινωνία</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="slider">
+        <img src="backgroundcar.png" alt="Slider Image">
+        <div class="slider-text">Εισαγωγή Οχημάτων από τη Γερμανία</div>
+        <div class="social-links">
+            <a href="https://www.youtube.com" target="_blank">
+                <img src="tiktok.png" alt="TikTok">Aκολουθήστε μας στο TikTok
+            </a>
+            <a href="https://www.instagram.com" target="_blank">
+                <img src="instagram.png" alt="Instagram">Aκολουθήστε μας στο Instagram
+            </a>
+        </div>
+    </section>
+    <div class="slider-description">
+        Εντοπίζουμε και αξιολογούμε με απόλυτη ακρίβεια το όχημα που σας ενδιαφέρει. Πραγματοποιούμε σχολαστικό τεχνικό έλεγχο και σας παρέχουμε αναλυτική αναφορά για την πραγματική του κατάσταση – μηχανική, αισθητική και λειτουργική.
+    </div>
+
+    <section id="services" class="services">
+        <h1>Υπηρεσίες</h1>
+        <div class="service-grid">
+            <div class="service-item">
+                <img src="1.ejoterikoselegxos.png" alt="Έλεγχος Εξωτερικός">
+                <h2>Έλεγχος Εξωτερικός</h2>
+            </div>
+            <div class="service-item">
+                <img src="2.esoterikoselegxos.png" alt="Έλεγχος Εσωτερικός">
+                <h2>Έλεγχος Εσωτερικός</h2>
+            </div>
+            <div class="service-item">
+                <img src="3.leitoyrgikotitaa.png" alt="Έλεγχος Λειτουργικότητας">
+                <h2>Έλεγχος Λειτουργικότητας</h2>
+            </div>
+            <div class="service-item">
+                <img src="service4.png" alt="Γενικός Έλεγχος">
+                <h2>Γενικός Έλεγχος</h2>
+            </div>
+            <div class="service-item">
+                <img src="service5.png" alt="Τελική Εικόνα μετά τον Έλεγχο">
+                <h2>Τελική Εικόνα μετά τον Έλεγχο</h2>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h1>Απλά & ξεκάθαρα βήματα<br>Από την αρχή έως την παράδοση</h1>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <img src="6.epiloghoximatos.png" alt="Επιλογή Οχήματος">
+                <h2>Επιλογή Οχήματος</h2>
+                <p>Μετά από επικοινωνία μαζί σας, εντοπίζουμε και συμφωνούμε στο όχημα που ανταποκρίνεται στις ανάγκες και τις προτιμήσεις σας.</p>
+            </div>
+            <div class="feature-item">
+                <img src="feature2.png" alt="Πλήρης Τεχνικός Έλεγχος">
+                <h2>Πλήρης Τεχνικός Έλεγχος</h2>
+                <p>Προχωράμε σε αναλυτικό έλεγχο του οχήματος, εξασφαλίζοντας ότι πληροί όλα τα ποιοτικά και μηχανολογικά κριτήρια.</p>
+            </div>
+            <div class="feature-item">
+                <img src="feature3.png" alt="Συνεχής Ενημέρωση">
+                <h2>Συνεχής Ενημέρωση</h2>
+                <p>Σας κρατάμε ενήμερους καθ’ όλη τη διάρκεια της διαδικασίας, με δια metagen και επαγγελματισμό.</p>
+            </div>
+            <div class="feature-item">
+                <img src="feature4.png" alt="Οριστικοποίηση Αγοράς">
+                <h2>Οριστικοποίηση Αγοράς</h2>
+                <p>Μόλις συμφωνήσετε, προχωράμε στην αγορά του οχήματος για λογαριασμό σας.</p>
+            </div>
+            <div class="feature-item">
+                <img src="feature5.png" alt="Οργάνωση Μεταφοράς">
+                <h2>Οργάνωση Μεταφοράς</h2>
+                <p>Καθορίζουμε από κοινού τον τρόπο και τον χρόνο μεταφοράς του οχήματος στην περιοχή σας.</p>
+            </div>
+            <div class="feature-item">
+                <img src="feature6.png" alt="Διαδικασίες Κυκλοφορίας">
+                <h2>Διαδικασίες Κυκλοφορίας</h2>
+                <p>Αναλαμβάνουμε όλες τις απαραίτητες ενέργειες για την έκδοση πινακίδων και την ένταξη του οχήματος σε κυκλοφορία.</p>
+            </div>
+            <div class="feature-item">
+                <img src="feature7.png" alt="Παράδοση Οχήματος">
+                <h2>Παράδοση Οχήματος</h2>
+                <p>Το όχημα παραδίδεται σε εσάς, έτοιμο για χρήση, με όλα τα νόμιμα έγγραφα και τις απαραίτητες προδιαγραφές.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <p>Για περισσότερες πληροφορίες είμαστε στην διάθεσή σας</p>
+        <div class="contact-links">
+            <a href="tel:+1234567890"><img src="cellulargreece.png" alt="Call Greece"></a>
+            <a href="tel:+1234567890"><img src="cellular+49.png" alt="Call Germany"></a>
+            <a href="viber://chat?number=%2B1234567890"><img src="viber.png" alt="Viber"></a>
+            <a href="https://wa.me/1234567890" target="_blank"><img src="whatsapp.png" alt="WhatsApp"></a>
+        </div>
+        <p>Liarostathis Automobile © 2025 | 
+            <a href="mailto:evangelosliarostathis@gmail.com">email: evangelosliarostathis@gmail.com</a>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('.header');
+            const navLinks = document.querySelectorAll('nav ul li a');
+            const logoLink = document.querySelector('.logo-link');
+            const sections = document.querySelectorAll('#home, #services, #features, #footer');
+            const sliderDescription = document.querySelector('.slider-description');
+            const serviceItems = document.querySelectorAll('.service-item');
+            const featureItems = document.querySelectorAll('.feature-item');
+
+            function updateScrollMargin() {
+                const headerHeight = header.offsetHeight;
+                sections.forEach(section => {
+                    section.style.scrollMarginTop = `${headerHeight}px`;
+                });
+            }
+
+            updateScrollMargin();
+            window.addEventListener('resize', updateScrollMargin);
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    if (this.getAttribute('href') === '#home') {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            logoLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                navLinks.forEach(l => l.classList.remove('active'));
+                document.querySelector('a[href="#home"]').classList.add('active');
+            });
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    } else {
+                        entry.target.classList.remove('in-view');
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+            observer.observe(sliderDescription);
+            serviceItems.forEach(item => observer.observe(item));
+            featureItems.forEach(item => observer.observe(item));
+        });
+    </script>
+</body>
+</html>
